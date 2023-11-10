@@ -1,17 +1,15 @@
 // App.jsx
-import React, { useState } from "react";
-import LinePlot from "./components/LinePlot";
-import Filter from "./components/Filter";
-import StackedBar from "./components/StackedBar";
+import React, { useEffect, useState } from "react";
+import LineChart from "./components/LineChart/LineChart";
+import StackedBar from "./components/StackedBarChart/StackedBar";
 
 const App = () => {
-  
-
-  // Fetch the data and dimensions from an API or other source
-
 
   return (
-    <StackedBar />
+    <LineChart xAxisLabel="Year" yAxisLabel="Wage"
+    filterNames={["State", "Visa", "Sector"]}
+    enumsArr={[["Arizona", "Arkansas", "Texas"], ["H-1B", "H-2A", "H-2B"], ["Utilities", "Mining", "Construction"]]}
+    />
   );
 };
 

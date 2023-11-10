@@ -11,3 +11,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.chart-container {
+  margin: auto;
+}
+
+.filters{
+  display: inline;
+}
+
+.filter {
+  display: inherit;
+  margin: 10px;
+}
+
+.chart {
+  max-width: 1000px;
+  max-height: 1000px;
+}

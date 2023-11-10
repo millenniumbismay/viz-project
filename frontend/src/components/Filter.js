@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 
-const Filter = ({ filterName, enums }) => {
+const Filter = ({ filterName, enums, selectedFilters, setSelectedFilters }) => {
   // selectedFilters is a set of the selected filters
   // since we want to allow multiple filters to be selected at once
   // we use a set instead of a single value, which makes it easier to add/remove values
-  const [selectedFilters, setSelectedFilters] = useState(new Set());
 
   // handleChange is called whenever a checkbox is clicked
   // it updates the selectedFilters set
   const handleChange = (event) => {
     const value = event.target.name;
-    const newSelectedFilters = new Set(selectedFilters);
-    if (selectedFilters.has(value)) {
-      newSelectedFilters.delete(value);
+    const newSelectedFilters = Array.from(selectedFilters);
+    const index = selectedFilters.indexOf(value);
+    if (index > -1) {
+      newSelectedFilters.splice(index, 1);
     } else {
-      newSelectedFilters.add(value);
+      newSelectedFilters.push(value);
     }
     setSelectedFilters(newSelectedFilters);
   };
@@ -30,7 +30,7 @@ const Filter = ({ filterName, enums }) => {
               type="checkbox"
               name={value}
               id={value}
-              checked={selectedFilters.has(value)}
+              checked={selectedFilters.includes(value)}
               onChange={handleChange}
             />
             <label className="form-check-label" htmlFor={value}>
