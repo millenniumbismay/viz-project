@@ -1,16 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
-import Visualization from './Visualization';
+// App.jsx
+import React, { useState } from "react";
+import LinePlot from "./components/LinePlot";
+import Filter from "./components/Filter";
+import StackedBar from "./components/StackedBar";
+
+const App = () => {
+  
+
+  // Fetch the data and dimensions from an API or other source
 
 
-function App() {
   return (
-    <div className="App">
-      <main>
-        <Visualization /> {/* Render the Visualization component here */}
-      </main>
-    </div>
+    <StackedBar />
   );
-}
+};
 
 export default App;
