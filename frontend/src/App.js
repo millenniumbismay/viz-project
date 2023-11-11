@@ -37,7 +37,7 @@ const App = () => {
       <Routes>
         <Route path="/linechart" element={<LineChart filterNames={filterNames} enumsArr={enumsArr} />} />
         <Route path="/stackedbar" element={<StackedBar />} />
-        <Route path="/sankey" element={<Sankey />} />
+        <Route path="/sankey" element={<Sankey filterNames={filterNames} enumsArr={enumsArr} />} />
         {/* <Route path="/fourth" element={<FourthComponent />} /> */}
       </Routes>
     </Router>

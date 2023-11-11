@@ -13,6 +13,7 @@ code {
 }
 
 .chart-container {
+  margin-top: 100px;
   margin: auto;
   width: 1000px;
   height: 1000px;
@@ -28,6 +29,10 @@ code {
   display: flex;
   justify-content: center;
   width: inherit;
+}
+
+.chart {
+  margin-top: 20px;
 }
 
 .filter {

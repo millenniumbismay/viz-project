@@ -13,7 +13,7 @@ const LineChart = ({ xAxisLabel, yAxisLabel, filterNames, enumsArr }) => {
 
     const [chartData, setChartData] = useState(null);
 
-    // create a function which takes an integer i, and returns 0
+    
     const modifyFilterStateArr = (i) => {
         return (newSelectedFilters) => {
             const newFilterStateArr = Array.from(filterStateArr);
