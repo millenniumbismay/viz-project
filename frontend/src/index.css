@@ -14,18 +14,36 @@ code {
 
 .chart-container {
   margin: auto;
+  width: 1000px;
+  height: 1000px;
 }
 
-.filters{
-  display: inline;
+.slider {
+  /* use same width as .chart */
+  width: inherit;
+  margin-top: 20px;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  width: inherit;
 }
 
 .filter {
-  display: inherit;
+  display: inline-block;
   margin: 10px;
 }
 
-.chart {
-  max-width: 1000px;
-  max-height: 1000px;
+.MuiSlider-thumb {
+  height: 22px !important;
+  width: 22px !important;
+  background-color: inherit !important;
+  border: 2px solid currentColor !important;
+  margin-top: -10px !important;
+  box-shadow: none !important;
+}
+
+.view-filter {
+  margin-bottom: 10px;
 }

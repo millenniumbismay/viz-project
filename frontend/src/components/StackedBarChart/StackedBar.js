@@ -8,6 +8,10 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import CustomSlider from './CustomSlider';
+import Filter from '../Filter';
+import Fade from 'react-bootstrap/Fade';
+import axios from 'axios';
 
 
 ChartJS.register(
@@ -18,6 +22,27 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+
+
+const ViewByCountry = ({ filterCategory, setFilterCategory }) => {
+  return (
+    <button
+      className={`view-filter btn ${!filterCategory ? 'btn-danger' : 'btn-primary'}`}
+      onClick={() => { setFilterCategory(!filterCategory); }}>
+      View by Country
+    </button>
+  );
+}
+
+const ViewByVisa = ({ filterCategory, setFilterCategory }) => {
+  return (
+    <button
+      className={`view-filter btn ${filterCategory ? 'btn-danger' : 'btn-primary'}`}
+      onClick={() => { setFilterCategory(!filterCategory); }}>
+      View by Visa
+    </button>
+  );
+}
 
 
 const StackedBar = () => {
@@ -36,42 +61,76 @@ const StackedBar = () => {
         display: false
       }
     },
+    animation: false
   }
 
-  const data = {
-    labels: ["2015", "2014", "2013", "2012", "2011"],
+  const [data, setData] = useState(null);
 
-    datasets: [{
-      data: [727, 589, 537, 543, 574],
-      backgroundColor: "rgba(63,103,126,1)",
-      hoverBackgroundColor: "rgba(50,90,100,1)"
-    }, {
-      data: [238, 553, 746, 884, 903],
-      backgroundColor: "rgba(163,103,126,1)",
-      hoverBackgroundColor: "rgba(140,85,100,1)"
-    }, {
-      data: [1238, 553, 746, 884, 903],
-      backgroundColor: "rgba(63,203,226,1)",
-      hoverBackgroundColor: "rgba(46,185,235,1)"
-    }]
-  }
+  const [sliderValue, setSliderValue] = useState(2010);
+  const [selectedCountries, setSelectedCountries] = useState([]);
+  const [selectedVisaTypes, setSelectedVisaTypes] = useState([]);
+  const [filterCategory, setFilterCategory] = useState(true);
 
   const chartRef = useRef(null);
 
   useEffect(() => {
-    const ctx = chartRef.current.getContext('2d');
+    const ctx = chartRef?.current?.getContext('2d');
     var myChart = new ChartJS(ctx, {
       type: 'bar', // change to the type of chart you want
       data: data, // add your data here
       options: barOptions // add your options here
     });
     return () => { myChart.destroy(); }
-  }, [barOptions, data]);
+  }, [data]);
+
+
+  useEffect(() => {
+    if (!filterCategory) setSelectedCountries([]);
+    else setSelectedVisaTypes([]);
+  }, [filterCategory]); // This will run whenever filterCategory changes
+
+  useEffect(() => {
+    axios.post('http://localhost:8000/api/stackedbar', {
+      "year": sliderValue,
+      "selectedCountries": selectedCountries,
+      "selectedVisas": selectedVisaTypes,
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => setData(res.data))
+      .catch(error => console.error('Error:', error));
+  }, [sliderValue, selectedCountries, selectedVisaTypes]);
+
 
   return (
-  <div>
-    <canvas ref={chartRef} />
-  </div>
+    <div className="chart-container">
+      <div className="chart">
+        <canvas ref={chartRef} />
+      </div>
+
+      <CustomSlider min={2010} max={2022} sliderValue={sliderValue} setSliderValue={setSliderValue} />
+
+      <div className='filters'>
+        <div className='filter' style={{ display: 'flex', flexDirection: 'column' }}>
+          <ViewByCountry filterCategory={filterCategory} setFilterCategory={setFilterCategory} />
+          <Fade in={filterCategory}>
+            <div>
+              <Filter filterName={"Filter by Country"} enums={["India", "Germany", "Japan"]} selectedFilters={selectedCountries} setSelectedFilters={setSelectedCountries} />
+            </div>
+          </Fade>
+        </div>
+        <div className='filter' style={{ display: 'flex', flexDirection: 'column' }}>
+          <ViewByVisa filterCategory={filterCategory} setFilterCategory={setFilterCategory} />
+          <Fade in={!filterCategory}>
+            <div>
+              <Filter filterName={"Filter by Visa type"} enums={["H-1B", "H-2A", "H-2B"]} selectedFilters={selectedVisaTypes} setSelectedFilters={setSelectedVisaTypes} />
+            </div>
+          </Fade>
+        </div>
+      </div>
+    </div>
   );
 }
 
