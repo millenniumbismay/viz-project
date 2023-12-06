@@ -1,43 +1,53 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
 import LineChart from './components/LineChart/LineChart';
 import StackedBar from './components/StackedBarChart/StackedBar';
 import Sankey from './components/SankeyDiagram/Sankey';
+import { filterNames, sankeyFilters, sankeyEnumsArr, enumsArr } from './constants.js';
+import { AppBar, Toolbar, Typography, Button, Box } from '@material-ui/core';
 
-const NavBar = () => (
-  <nav className="navbar navbar-expand-lg navbar-light bg-info">
-    <div>
-      <div className="collapse navbar-collapse">
-        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-          <li className="nav-item">
-            <Link className="nav-link" to="/linechart">Line Chart</Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/stackedbar">Stacked Bar</Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/sankey">Sankey</Link>
-          </li>
-          {/* <li className="nav-item">
-            <Link className="nav-link" to="/fourth">Fourth Component</Link>
-          </li> */}
-        </ul>
-      </div>
-    </div>
-  </nav>
+const active = {
+  color: 'black',
+  textDecoration: 'none',
+};
+
+const inactive = {
+  textDecoration: 'none',
+  backgroundColor: 'red',
+};
+
+const NavBar = ({ activeItem }) => (
+  <AppBar position="static" className="appbar">
+    <Typography align="center" className="project-title">Visualizing U.S. Immigration and Economy</Typography>
+    <Toolbar variant="dense">
+      <Box display="flex" justifyContent="center" width="100%">
+        <Button color="inherit">
+          <NavLink to="/linechart" style={isActive => isActive ? active : inactive}>Line Chart</NavLink>
+        </Button>
+        <Button color="inherit">
+          <NavLink to="/stackedbar" style={isActive => isActive ? active : inactive}>Stacked Bar</NavLink>
+        </Button>
+        <Button color="inherit">
+          <NavLink to="/sankey" style={isActive => isActive ? active : inactive}>Sankey</NavLink>
+        </Button>
+        {/* <Button color="inherit">
+          <NavLink to="/fourth" activeStyle={activeStyle}>Fourth Component</NavLink>
+        </Button> */}
+      </Box>
+    </Toolbar>
+  </AppBar>
 );
 
 const App = () => {
-  const filterNames = ["State", "Visa", "Sector"];
-  const enumsArr = [["Arizona", "Arkansas", "Texas"], ["H-1B", "H-2A", "H-2B"], ["Utilities", "Mining", "Construction"]];
+  const [activeItem, setActiveItem] = useState(1);
 
   return (
     <Router>
-      <NavBar />
+      <NavBar activeItem={activeItem}/>
       <Routes>
-        <Route path="/linechart" element={<LineChart filterNames={filterNames} enumsArr={enumsArr} />} />
+        <Route path="/linechart" element={<LineChart filterNames={filterNames} enumsArr={enumsArr} xAxisLabel={"Year"} yAxisLabel="Mean Wage per Year" />} />
         <Route path="/stackedbar" element={<StackedBar />} />
-        <Route path="/sankey" element={<Sankey filterNames={filterNames} enumsArr={enumsArr} />} />
+        <Route path="/sankey" element={<Sankey filterNames={sankeyFilters} enumsArr={sankeyEnumsArr} />} />
         {/* <Route path="/fourth" element={<FourthComponent />} /> */}
       </Routes>
     </Router>

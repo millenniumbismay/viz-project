@@ -7,6 +7,17 @@ import Chart from 'chart.js/auto';
 // string for xAxisLabel
 // string for yAxisLabel
 // array of strings for yLabelArr (legend labels)
+
+function randomColor(brightness){
+  function randomChannel(brightness){
+    var r = 255-brightness;
+    var n = 0|((Math.random() * r) + brightness);
+    var s = n.toString(16);
+    return (s.length==1) ? '0'+s : s;
+  }
+  return '#' + randomChannel(brightness) + randomChannel(brightness) + randomChannel(brightness);
+}
+
 const LinePlot = ({ xAxisLabel, yAxisLabel, data }) => {
 
   const options = {
@@ -28,6 +39,10 @@ const LinePlot = ({ xAxisLabel, yAxisLabel, data }) => {
       }
     },
   };
+
+  data.datasets.forEach(dataset => {
+    dataset['borderColor'] = randomColor(75);
+  });
 
   return (
     <Line data={data} options={options} />

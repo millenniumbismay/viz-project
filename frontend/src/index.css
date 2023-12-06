@@ -52,3 +52,28 @@ code {
 .view-filter {
   margin-bottom: 10px;
 }
+
+.scrollable-div {
+  max-height: 200px; /* Adjust this value as needed */
+  overflow-y: auto;
+}
+
+.project-title {
+  font-family: 'Helevetica Neue', Helvetica, Arial, sans-serif !important;
+  color: #fff !important;
+  font-size: 24px !important;
+  font-weight: bold !important;
+  padding: 8px !important;
+}
+
+.appbar {
+  background-color: #990011 !important;
+}
+
+.MuiButton-root {
+  color: #ff6347 !important;
+  margin: 5px !important;
+  font-weight: bold !important;
+  background-color: white !important;
+  text-transform: none !important;
+}

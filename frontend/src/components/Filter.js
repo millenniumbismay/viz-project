@@ -22,7 +22,7 @@ const Filter = ({ filterName, enums, selectedFilters, setSelectedFilters }) => {
   return (
     <div className="d-inline-block">
       <div className="p-3 mb-2 bg-primary text-white rounded text-center">{filterName}</div>
-      <div className="border p-3">
+      <div className="border p-3 scrollable-div">
         {enums.map((value) => (
           <div key={value} className="form-check">
             <input

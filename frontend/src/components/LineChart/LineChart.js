@@ -21,6 +21,9 @@ const LineChart = ({ xAxisLabel, yAxisLabel, filterNames, enumsArr }) => {
             setFilterStateArr(newFilterStateArr);
         };
     }
+
+    console.log(filterStateArr);
+    console.log(filterNames);
     
     useEffect(() => {
         axios.post('http://localhost:8000/api/lineplot', {
