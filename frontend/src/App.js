@@ -1,14 +1,17 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import LineChart from './components/LineChart/LineChart';
-import Sankey from './components/SankeyDiagram/Sankey';
-import StackedBar from './components/StackedBarChart/StackedBar';
-import NavBar from './components/NavBar';
-import { enumsArr, filterNames, sankeyEnumsArr, sankeyFilters } from './constants';
+import LineChart from './components/LineChart/LineChart.js';
+import Sankey from './components/SankeyDiagram/Sankey.js';
+import StackedBar from './components/StackedBarChart/StackedBar.js';
+import NavBar from './components/NavBar.js';
+import { enumsArr, filterNames, sankeyEnumsArr, sankeyFilters } from './constants.js';
 import seedrandom from 'seedrandom';
+import RadioFilter from './components/RadioFilter.js';
+import { useState } from 'react';
 
 seedrandom('hello.', { global: true });
 
 const App = () => { 
+  const [a, setA] = useState([]);
   return (
     <Router>
       <NavBar />
@@ -19,6 +22,7 @@ const App = () => {
         {/* <Route path="/fourth" element={<FourthComponent />} /> */}
       </Routes>
     </Router>
+    // <RadioFilter filterName="test" enums={["t1", "t2", "t3"]} selectedFilters={a} setSelectedFilters={setA} />
   );
 };
 

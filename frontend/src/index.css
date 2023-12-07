@@ -21,7 +21,6 @@ code {
 .slider {
   /* use same width as .chart */
   width: inherit;
-  margin-top: 20px;
   margin-bottom: 20px;
 }
 
@@ -33,6 +32,7 @@ code {
 
 .chart {
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .filter {
@@ -69,7 +69,7 @@ code {
 }
 
 .project-title {
-  color: #fff !important;
+  color: black !important;
   font-size: 24px !important;
   font-weight: bold !important;
   padding: 8px !important;
@@ -83,19 +83,29 @@ code {
 }
 
 .chart-story {
-  margin-top: 300px;
-  margin-left: 50px;
-  padding-right: 50px;
+  margin-top: 100px;
+  margin-left: 25px;
+  padding-right: 25px;
   max-width: 400px;
 }
 
-.appbar {
-  background-color: #990011 !important;
+.btn-secondary {
+  background-color: #f8f9fa !important;
+  border-color: #f8f9fa !important;
+  color: black !important;
 }
 
-.MuiButton-root {
-  border: solid 1px #fff !important;
-  border-radius: 5px !important;
-  margin: 5px !important;
-  text-transform: none !important;
+.navlink {
+  text-decoration: none;
+  color: inherit;
+  text-transform: none;
+}
+
+.btn-primary {
+  color: white !important;
+}
+
+.appbar {
+  background-color: #a8f5ff !important;
+  box-shadow: none !important;
 }

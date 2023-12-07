@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import Filter from '../Filter';
-import randomColor from '../../constants.js'
-import { Chart } from "react-google-charts";
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Chart } from "react-google-charts";
+import randomColor from '../../constants.js';
+import Filter from '../Filter.js';
 
 const Sankey = ({ filterNames, enumsArr }) => {
   const [filterStateArr, setFilterStateArr] = useState(Array.from({ length: filterNames.length }, (_, i) => []));
@@ -68,17 +68,31 @@ const Sankey = ({ filterNames, enumsArr }) => {
   return (
     <div className="chart-root">
       <div className="chart-story">
-        <h1>Sankey Diagram</h1>
-        <p>Sankey diagrams are a type of flow diagram in which the width of the arrows is proportional to the flow rate.</p>
+        <h2>Heterogeneous Sankey Diagram for the Flow Analysis of Visa Types to Sector to GDP</h2>
+        <p>
+          Heterogeneous Sankey Diagram is used to infer the flow
+          of foreign work force to each economic sector, i.e. the Composition of foreign workers in
+          each economic sector, and the flow of money from each sector to the GDP of the country,
+          i.e. the contribution of each sector to the GDP. The heterogeneity of the Sankey Diagram
+          provides a powerful visualization and narrates the story to its conclusion. 
+        </p>
+        <h4> Filter by Visa Type </h4>
+        <p> To understand the proportion of workers in corresponding sectors and their final contribution to GDP</p>
+        <h4> Filter by Sector </h4>
+        <p> To understand the proportion of workers from different Visa Types in that sector and its final contribution to GDP</p>
       </div>
       <div className="chart-container">
         <div className="sankey-description">
-          <p style={{ textAlign: 'left' }}>
-            Composition of foreign workers in each sector
-          </p>
-          <p style={{ textAlign: 'right' }}>
+          <div style={{flex: '1'}}>
+            <p style={{ textAlign: 'center' }}>
+              Composition of foreign workers in each sector
+            </p>
+          </div>
+          <div style={{flex: '1'}}>
+          <p style={{ textAlign: 'center' }}>
             Contribution of each sector to the GDP
           </p>
+          </div>
         </div>
         <div className="chart" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <Chart

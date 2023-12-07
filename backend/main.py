@@ -235,7 +235,7 @@ async def stackedbar(query: StackedBarQuery) -> StackedBarData:
 
     region_country_dict = dict()
     if category == 'country':
-        print("Country!!!")
+        # print("Country!!!")
         year_df = globals()[f"niv_{year}"].copy()
         column_indices = list(range(1, len(year_df.columns)-1, 1))
         year_df['total_num_people'] = year_df.iloc[:, column_indices].sum(axis = 1)
@@ -246,7 +246,7 @@ async def stackedbar(query: StackedBarQuery) -> StackedBarData:
             region_index = year_df.index[year_df['region'] == region].tolist()
             region_indices[region] = region_index[0]
             region_indices = dict(sorted(region_indices.items()))
-        print(region_indices)
+        # print(region_indices)
 
         prev_idx = 0
         for region, region_idx in region_indices.items():
@@ -257,7 +257,7 @@ async def stackedbar(query: StackedBarQuery) -> StackedBarData:
             region_country_dict[region] = dict(sorted(region_country_dict[region].items(), key = lambda x: x[1], reverse = True))
 
         region_country_dict = dict(sorted(region_country_dict.items(), key = lambda x: x[1]['Total'], reverse = True))
-        print(region_country_dict)
+        # print(region_country_dict)
     
     if len(region_country_dict) > 0:
         countries_to_visualize = list()
@@ -267,44 +267,93 @@ async def stackedbar(query: StackedBarQuery) -> StackedBarData:
         if len(selectedCountries) > 0:
             countries_to_visualize = selectedCountries
         print("countries_to_visualize: ", countries_to_visualize)
-        
+
         labels = list(region_country_dict.keys())
-        print("All regions:", labels)
-
-        country_dict = {str(i): [] for i in range(1, 6)}
-        if len(selectedCountries) == 0:
-            country_dict['Others'] = []
-
-        for region in labels:
-            others_cnt = 0
-            j = 0
-            for country_name, people_cnt in region_country_dict[region].items():
-                if 1 <= j <= 5:
-                    country_dict[str(j)].append(people_cnt)
-                elif j > 5:
-                    others_cnt += people_cnt
-                j += 1
-            
-            if len(selectedCountries) == 0:
-                country_dict['Others'].append(others_cnt)
+        # print("All regions:", labels)
         
-        print("country_dict:", country_dict)
+        final_region_country_dict = {k: dict() for k in region_country_dict}
+        for country_name in countries_to_visualize:
+            for region in region_country_dict:
+                if country_name in region_country_dict[region]:
+                    final_region_country_dict[region][country_name] = region_country_dict[region][country_name]
+        
 
+        if len(selectedCountries) == 0:
+            for region in region_country_dict:
+                extra_countries = list(set(region_country_dict[region].keys()) - set(final_region_country_dict[region].keys()))
+                extra_countries.remove('Total')
+                # print("extra_countries:", extra_countries)
+                others_cnt = 0
+                for country in extra_countries:
+                    others_cnt += region_country_dict[region][country]
+                final_region_country_dict[region]['Others'] = others_cnt
+
+        print("final_region_country_dict:", final_region_country_dict)
+
+        country_name_dict = {str(i): [] for i in range(len(final_region_country_dict))}
+        country_cnt_dict = {str(i): [] for i in range(len(final_region_country_dict))}
+
+        for j in range(len(final_region_country_dict)):
+            for region, country_data in final_region_country_dict.items():
+                if len(country_data) > j:
+                    country_name = list(country_data.keys())[j]
+                    country_name_dict[str(j)].append(country_name)
+                    country_cnt_dict[str(j)].append(country_data[country_name])
+                else:
+                    # country_name_dict[str(j)].append('')
+                    country_cnt_dict[str(j)].append(0)
+        print("country_cnt_dict:", country_cnt_dict)
+        print("country_name_dict:", country_name_dict)
+        
         datasets = list()
-        color_i = 0
-        for country_name, region_wise_cnt in country_dict.items():
+        j = 0
+        for j in range(len(final_region_country_dict)):
             temp_dict = dict()
-            temp_dict['data'] = region_wise_cnt
-            temp_dict['backgroundColor'] = visa_color_pickers[color_i]['backgroundColor']
-            temp_dict['hoverBackgroundColor'] = visa_color_pickers[color_i]['hoverBackgroundColor']
-            color_i += 1
-
+            temp_dict['data'] = country_cnt_dict[str(j)]
+            if country_cnt_dict[str(j)] != 0:
+                temp_dict['label'] = country_name_dict[str(j)]
             datasets.append(temp_dict)
 
+        print("datasets:", datasets)
         return StackedBarData(
             labels = labels,
             datasets = datasets
         )
+
+        # country_dict = {str(i): [] for i in range(1, 6)}
+        # if len(selectedCountries) == 0:
+        #     country_dict['Others'] = []
+
+        # for region in labels:
+        #     others_cnt = 0
+        #     j = 0
+        #     for country_name, people_cnt in region_country_dict[region].items():
+        #         if 1 <= j <= 5:
+        #             country_dict[str(j)].append(people_cnt)
+        #         elif j > 5:
+        #             others_cnt += people_cnt
+        #         j += 1
+            
+        #     if len(selectedCountries) == 0:
+        #         country_dict['Others'].append(others_cnt)
+        
+        # print("country_dict:", country_dict)
+
+        # datasets = list()
+        # color_i = 0
+        # for country_name, region_wise_cnt in country_dict.items():
+        #     temp_dict = dict()
+        #     temp_dict['data'] = region_wise_cnt
+        #     temp_dict['backgroundColor'] = visa_color_pickers[color_i]['backgroundColor']
+        #     temp_dict['hoverBackgroundColor'] = visa_color_pickers[color_i]['hoverBackgroundColor']
+        #     color_i += 1
+
+        #     datasets.append(temp_dict)
+
+        # return StackedBarData(
+        #     labels = labels,
+        #     datasets = datasets
+        # )
 
     return StackedBarData(
         labels = regions,
@@ -312,12 +361,14 @@ async def stackedbar(query: StackedBarQuery) -> StackedBarData:
             {
                 "data": [727, 589, 537, 543, 574],
                 "backgroundColor": "rgba(63,103,126,1)",
-                "hoverBackgroundColor": "rgba(50,90,100,1)"
+                "hoverBackgroundColor": "rgba(50,90,100,1)",
+                "labels": ['A', 'B', 'C', 'D', 'E']
             },
             {
                 "data": [238, 380, 426, 453, 502],
                 "backgroundColor": "rgba(163,103,126,1)",
-                "hoverBackgroundColor": "rgba(140,85,100,1)"
+                "hoverBackgroundColor": "rgba(140,85,100,1)",
+                "labels": ['A', 'F', 'R', 'D', 'E']
             },
             {
                 "data": [123, 387, 543, 234, 112],

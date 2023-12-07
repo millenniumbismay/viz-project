@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import LinePlot from "./LinePlot";
-import Filter from "../Filter";
 import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import Filter from "../Filter.js";
+import LinePlot from "./LinePlot.js";
 
 // Takes in array of xvalues for xData
 // array of arrays of yvalues for yData
@@ -45,20 +45,23 @@ const LineChart = ({ xAxisLabel, yAxisLabel, filterNames, enumsArr }) => {
         </div>
     );
 
-
-
-
-
-
-
     return chartData ? (
         <div className="chart-root">
             <div className="chart-story">
-                <h1>Line Chart</h1>
+                <h2>Multi-line Charts for Mean Wage Correlation</h2>
                 <p>
-                    This line chart shows the mean wage per year for a given set of filters.
-                    The filters can be changed using the dropdown menus on the right.
+                    This visualization focuses on understanding the evolution of mean wage per year across different States, Visa Types,
+                    and Economic Sectors over the period from 2010 - 2020. These filters are independent of each other.
+                    The idea is to compare between the mean wage of multiple states, visa types or sectors.
+                    Our visualization offers unique ability to compare between sectors and visa types and states.
+                    This type of free interaction can help in analyzing the correlation between any two categories extensively.
                 </p>
+                <h4> Filter by State </h4>
+                <p> To compare the mean wage across states</p>
+                <h4> Filter by Visa </h4>
+                <p> To compare the mean wage across different workers</p>
+                <h4> Filter by Sector </h4>
+                <p> To compare the mean wage across different Economic Sectors</p>
             </div>
             <div className="chart-container">
                 <div className="chart">
