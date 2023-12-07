@@ -50,3 +50,14 @@ us_states = {
     'Wisconsin': 'WI',
     'Wyoming': 'WY'
 }
+
+regions = ['Africa', 'Asia', 'Europe', 'North America', 'Oceania', 'South America']
+
+visa_color_pickers = [
+            {"backgroundColor": "rgba(150,0,0,1)", "hoverBackgroundColor": "rgba(255,0,0,1)"},
+            {"backgroundColor": "rgba(0,150,0,1)", "hoverBackgroundColor": "rgba(0,255,0,1)"},
+            {"backgroundColor": "rgba(0,0,150,1)", "hoverBackgroundColor": "rgba(0,0,255,1)"},
+            {"backgroundColor": "rgba(150,150,0,1)", "hoverBackgroundColor": "rgba(255,255,0,1)"},
+            {"backgroundColor": "rgba(0,150,150,1)", "hoverBackgroundColor": "rgba(0,255,255,1)"},
+            {"backgroundColor": "rgba(150,0,150,1)", "hoverBackgroundColor": "rgba(255,0,255,1)"}
+        ]

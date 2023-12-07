@@ -21,9 +21,6 @@ const LineChart = ({ xAxisLabel, yAxisLabel, filterNames, enumsArr }) => {
             setFilterStateArr(newFilterStateArr);
         };
     }
-
-    console.log(filterStateArr);
-    console.log(filterNames);
     
     useEffect(() => {
         axios.post('http://localhost:8000/api/lineplot', {
@@ -55,12 +52,21 @@ const LineChart = ({ xAxisLabel, yAxisLabel, filterNames, enumsArr }) => {
 
 
     return chartData ? (
-        <div className="chart-container">
-            <div className="chart">
-                <LinePlot data={chartData} xAxisLabel={xAxisLabel} yAxisLabel={yAxisLabel} />
+        <div className="chart-root">
+            <div className="chart-story">
+                <h1>Line Chart</h1>
+                <p>
+                    This line chart shows the mean wage per year for a given set of filters.
+                    The filters can be changed using the dropdown menus on the right.
+                </p>
             </div>
-            <div className="filters">
-                {filterComponents}
+            <div className="chart-container">
+                <div className="chart">
+                    <LinePlot data={chartData} xAxisLabel={xAxisLabel} yAxisLabel={yAxisLabel} />
+                </div>
+                <div className="filters">
+                    {filterComponents}
+                </div>
             </div>
         </div>
     ) : <p>Loading...</p>

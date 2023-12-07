@@ -45,11 +45,18 @@ const CustomSlider = ({ min, max, sliderValue, setSliderValue }) => {
     useEffect(() => {
         const interval = setInterval(() => {
             if (isPlaying) {
-                setSliderValue((prevValue) => (prevValue < max ? prevValue + 1 : min));
+                setSliderValue((prevValue) => {
+                    if (prevValue === max) {
+                        setIsPlaying(false);
+                        return min;
+                    }
+                    return prevValue < max ? prevValue + 1 : prevValue;
+
+                });
             }
         }, 1000);
         return () => clearInterval(interval);
-    }, [isPlaying, setSliderValue]);
+    }, [isPlaying, setIsPlaying, setSliderValue]);
 
     return (
         <div className="slider">
@@ -57,8 +64,8 @@ const CustomSlider = ({ min, max, sliderValue, setSliderValue }) => {
                 value={sliderValue}
                 step={1}
                 onClick={() => setIsPlaying(!isPlaying)}
-                min={2010}
-                max={2022}
+                min={min}
+                max={max}
                 ThumbComponent={(props) => <PlayPauseThumbComponent isPlaying={isPlaying} currValue={sliderValue} {...props} />}
             />
         </div>

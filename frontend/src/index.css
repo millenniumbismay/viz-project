@@ -13,8 +13,7 @@ code {
 }
 
 .chart-container {
-  margin-top: 100px;
-  margin: auto;
+  margin-left: 20px;
   width: 1000px;
   height: 1000px;
 }
@@ -23,6 +22,7 @@ code {
   /* use same width as .chart */
   width: inherit;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .filters {
@@ -58,12 +58,35 @@ code {
   overflow-y: auto;
 }
 
+.MuiTypography-body1 {
+  font-family: inherit !important;
+}
+
+.sankey-description {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .project-title {
-  font-family: 'Helevetica Neue', Helvetica, Arial, sans-serif !important;
   color: #fff !important;
   font-size: 24px !important;
   font-weight: bold !important;
   padding: 8px !important;
+}
+
+.chart-root {
+  margin: auto;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+}
+
+.chart-story {
+  margin-top: 300px;
+  margin-left: 50px;
+  padding-right: 50px;
+  max-width: 400px;
 }
 
 .appbar {
@@ -71,9 +94,8 @@ code {
 }
 
 .MuiButton-root {
-  color: #ff6347 !important;
+  border: solid 1px #fff !important;
+  border-radius: 5px !important;
   margin: 5px !important;
-  font-weight: bold !important;
-  background-color: white !important;
   text-transform: none !important;
 }
